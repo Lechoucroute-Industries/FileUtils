@@ -75,3 +75,27 @@ export class Fileinput {
 
 
 
+//SEARCH FOR HOW MANY TIMES A WORD/STRING APPEARS IN A FILE
+
+export class ExactContentSearch {
+  constructor(file, searchTerm, separators) {
+    this.file = file;
+    this.searchTerm = searchTerm;
+    this.separators = separators;
+    this.count = 0;  // default
+  }
+
+  async loadCount() {
+    const text = await this.file.text();
+    // Create regex to split by any of the separators
+    const separatorsRegex = new RegExp(`[${this.separators}]`);
+    const words = text.split(separatorsRegex);
+    this.count = words.filter(word => word === this.searchTerm).length;
+  }
+
+  getCount() {
+    return this.count;
+  }
+}
+
+
